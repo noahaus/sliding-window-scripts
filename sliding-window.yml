@@ -1,0 +1,57 @@
+name: base
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=main
+  - bedtools=2.29.2=hc088bd4_0
+  - biopython=1.78=py37h4abf009_1
+  - bzip2=1.0.8=h516909a_3
+  - ca-certificates=2020.11.8=ha878542_0
+  - certifi=2020.11.8=py37h89c1867_0
+  - cffi=1.14.0=py37he30daa8_1
+  - chardet=3.0.4=py37_1003
+  - conda=4.9.2=py37h89c1867_0
+  - conda-package-handling=1.6.1=py37h7b6447c_0
+  - cryptography=2.9.2=py37h1ba5d50_0
+  - idna=2.9=py_1
+  - ld_impl_linux-64=2.33.1=h53a641e_7
+  - libblas=3.9.0=3_openblas
+  - libcblas=3.9.0=3_openblas
+  - libedit=3.1.20181209=hc058e9b_0
+  - libffi=3.3=he6710b0_1
+  - libgcc-ng=9.1.0=hdf63c60_0
+  - libgfortran-ng=7.5.0=hae1eefd_17
+  - libgfortran4=7.5.0=hae1eefd_17
+  - liblapack=3.9.0=3_openblas
+  - libopenblas=0.3.12=pthreads_hb3c22a3_1
+  - libstdcxx-ng=9.1.0=hdf63c60_0
+  - ncurses=6.2=he6710b0_1
+  - openssl=1.1.1h=h516909a_0
+  - pip=20.0.2=py37_3
+  - pycosat=0.6.3=py37h7b6447c_0
+  - pycparser=2.20=py_0
+  - pyopenssl=19.1.0=py37_0
+  - pysocks=1.7.1=py37_0
+  - python=3.7.7=hcff3b4d_5
+  - python_abi=3.7=1_cp37m
+  - readline=8.0=h7b6447c_0
+  - requests=2.23.0=py37_0
+  - ruamel_yaml=0.15.87=py37h7b6447c_0
+  - setuptools=46.4.0=py37_0
+  - six=1.14.0=py37_0
+  - sqlite=3.31.1=h62c20be_1
+  - tk=8.6.8=hbc83047_0
+  - tqdm=4.46.0=py_0
+  - urllib3=1.25.8=py37_0
+  - wheel=0.34.2=py37_0
+  - xz=5.2.5=h7b6447c_0
+  - yaml=0.1.7=had09818_2
+  - zlib=1.2.11=h7b6447c_3
+  - pip:
+    - numpy==1.19.1
+    - pandas==1.1.1
+    - python-dateutil==2.8.1
+    - pytz==2020.1
+prefix: /home/noahaus/miniconda3
