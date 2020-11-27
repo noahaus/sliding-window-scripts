@@ -15,6 +15,7 @@ parser.add_argument('-t','--threads',dest='threads',help='number of cores to ena
 args = parser.parse_args()
 
 #input fasta
+print("reading in alignment")
 align = AlignIO.read(args.input, "fasta")
 out = open(args.output,"w+")
 
@@ -86,6 +87,7 @@ def tajima_run(task_to_accomplish):
             end = int(region.split(",")[1])
             seq = align[:,start:end]
             tajimaD = tajimas_d(seq)
+            print("{},{},{}".format(start,end,tajimaD))
             out.write("{},{},{}".format(start,end,tajimaD))
 
     return True
@@ -110,8 +112,7 @@ def main():
 
     for i in range(len(regions)):
         tasks_to_accomplish.put(regions[i])
-    print(tasks_to_accomplish.qsize())
-
+    
     # creating processes
     for w in range(number_of_processes):
         p = Process(target=tajima_run, args=(tasks_to_accomplish,))
@@ -125,5 +126,6 @@ def main():
     return True
 
 #run the main function where multiprocessing can occur
+print("beginning multi-processing")
 main()
 out.close()
