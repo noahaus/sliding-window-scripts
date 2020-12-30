@@ -54,4 +54,4 @@ dependencies:
     - pandas==1.1.1
     - python-dateutil==2.8.1
     - pytz==2020.1
-prefix: /home/noahaus/miniconda3
+prefix: sws

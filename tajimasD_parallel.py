@@ -1,4 +1,5 @@
 # function to calculate tajima's d from MSA
+# add a comment to test the github support
 import Bio
 from Bio import AlignIO #to parse the FASTA alignment
 from Bio import SeqIO
