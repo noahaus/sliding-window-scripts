@@ -2,24 +2,40 @@
 author: Noah Legall
 email: noahaus@uga.edu
 purpose: given a multi-sequence alignment, calculate the Tajima's D statistic in a sliding window.
+arguments: input FASTA, output CSV, window size, window step size
 */
 
 /****
 TODOS
 *****/
 
-// Creating and updating a file
-// multi-threading support
-// arguments for program
+// multi-threading support https://rust-lang-nursery.github.io/rust-cookbook/concurrency/parallel.html
+// arguments for program https://rust-lang-nursery.github.io/rust-cookbook/cli/arguments.html
+
 
 
 /******************** 
  main logic of code 
  ********************/
 
-fn main() {
-use seq_io::fasta::{Reader,Record}; //https://docs.rs/seq_io/0.3.1/seq_io/ we use this external crate to make FASTA parsing a bit easier.
-use std::str;
+ use seq_io::fasta::{Reader,Record}; //https://docs.rs/seq_io/0.3.1/seq_io/ we use this external crate to make FASTA parsing a bit easier.
+ use std::str;
+ use std::fs::File;
+ use std::io::{Write, BufReader, BufRead, Error};
+ use std::env;
+ 
+fn main() -> std::io::Result<()> {
+
+let args: Vec<String> = env::args().collect();
+
+let path = &args[1];
+let window_size = &args[2].parse::<usize>().unwrap();
+let window_step = &args[3].parse::<usize>().unwrap();
+
+
+let path = "output.csv";
+
+let mut output = File::create(path)?;
 
 //// 1 read in fasta file into Rust
 // 1.0 read in the fasta given a proper path
@@ -28,6 +44,7 @@ let mut reader = Reader::from_path("example2.fa").unwrap();
 // 1.1 create a Vec data structure that will hold the sequence strings
 let mut alignment = Vec::<String>::new();
 println!("start,end,tjd"); // this will be important for CSV file headers
+writeln!(output,"start,end,tjd")?;
 
 // 1.2 loop through the file and add values to the 'alignment' variable.
 // this is pretty boiler-plate from the seq_io website.
@@ -43,7 +60,8 @@ while let Some(record) = reader.next() {
 // currently we need a 'step_size' value, but this can be integrated trivially
 let mut window = Vec::<String>::new(); // vector to store window
 let mut start: usize = 0; // index to start the window
-let mut end: usize = 3; // index to end the window
+let mut end: usize = start + window_size; // index to end the window
+let mut data = String::new();
 
 // 2.1 while the size of 'end' is smaller than total size of the sequence, update the window
 while end <= alignment[0].len(){
@@ -54,12 +72,16 @@ while end <= alignment[0].len(){
 // 2.2 calculate the tajima's d statistic and print
 let temp = tajimas_d(&window);
 println!("{},{},{}",start,end,temp);
+data = format!("{},{},{}",start,end,temp);
+writeln!(output,"{}",data)?;
 
 // 2.3 update the step of the variables. reset the 'window' variable to be empty
-start = start + 1;
-end = end + 1;
+start += window_step;
+end += window_step;
 window.clear();
 }
+
+Ok(())
 
 }
 
