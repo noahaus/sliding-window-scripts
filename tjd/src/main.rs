@@ -9,37 +9,33 @@ arguments: input FASTA, output CSV, window size, window step size
 TODOS
 *****/
 
-// multi-threading support https://rust-lang-nursery.github.io/rust-cookbook/concurrency/parallel.html
-// arguments for program https://rust-lang-nursery.github.io/rust-cookbook/cli/arguments.html
-
+//currently none
 
 
 /******************** 
  main logic of code 
  ********************/
 
- use seq_io::fasta::{Reader,Record}; //https://docs.rs/seq_io/0.3.1/seq_io/ we use this external crate to make FASTA parsing a bit easier.
+ use seq_io::fasta::Reader; //https://docs.rs/seq_io/0.3.1/seq_io/ we use this external crate to make FASTA parsing a bit easier.
  use std::str;
  use std::fs::File;
- use std::io::{Write, BufReader, BufRead, Error};
+ use std::io::Write;
  use std::env;
  
 fn main() -> std::io::Result<()> {
 
 let args: Vec<String> = env::args().collect();
 
-let path = &args[1];
-let window_size = &args[2].parse::<usize>().unwrap();
-let window_step = &args[3].parse::<usize>().unwrap();
+let input_path = &args[1];
+let output_path = &args[2];
+let window_size = &args[3].parse::<usize>().unwrap();
+let window_step = &args[4].parse::<usize>().unwrap();
 
-
-let path = "output.csv";
-
-let mut output = File::create(path)?;
+let mut output = File::create(output_path)?;
 
 //// 1 read in fasta file into Rust
 // 1.0 read in the fasta given a proper path
-let mut reader = Reader::from_path("example2.fa").unwrap();
+let mut reader = Reader::from_path(input_path).unwrap();
 
 // 1.1 create a Vec data structure that will hold the sequence strings
 let mut alignment = Vec::<String>::new();
