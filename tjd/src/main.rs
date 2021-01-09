@@ -102,16 +102,17 @@ fn calculate_pi(alignment: &Vec<String>) -> f64 {
     let mut distances = Vec::new(); // vector that holds all the values of the pairwise distances
 
     // 1.1 'distances' vector is updated as the hamming distance is calculated between two sequences
+    println!("prepare for pairwise comparisons");
     for i in 0..align_length {
         for j in 0..align_length {
             if i < j {
                 distances.push(hamming_distance(&alignment[i],&alignment[j]));
+                println!("pairwise comparison");
             } else {
                 continue;
             }
         }
     }
-
     println!("pairwise distances computed");
 
     // 1.2 sum the pairwise distances and then divide by the n(n-1)
