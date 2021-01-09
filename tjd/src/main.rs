@@ -46,7 +46,7 @@ writeln!(output,"start,end,tjd")?;
 // this is pretty boiler-plate from the seq_io website.
 while let Some(record) = reader.next() {
     let record = record.expect("Error reading record");
-    for s in record.full_seq() {
+    for s in record.seq_lines() {
         alignment.push(str::from_utf8(&s).unwrap().to_string());
     }
 }
