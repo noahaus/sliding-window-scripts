@@ -66,7 +66,7 @@ let mut data = String::new();
 while end <= alignment[0].len(){
     for row in &alignment {
         window.push(row[start..end].to_string());
-        println!("window length pushed");
+        println!("window length pushed. end value equals {}", end);
 }
 
 // 2.2 calculate the tajima's d statistic and print
