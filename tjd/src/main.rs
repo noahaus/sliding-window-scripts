@@ -44,12 +44,14 @@ writeln!(output,"start,end,tjd")?;
 
 // 1.2 loop through the file and add values to the 'alignment' variable.
 // this is pretty boiler-plate from the seq_io website.
+println!("reading in alignment");
 while let Some(record) = reader.next() {
     let record = record.expect("Error reading record");
     for s in record.seq_lines() {
         alignment.push(str::from_utf8(&s).unwrap().to_string());
     }
 }
+println!("alignment stored");
 
 //// 2 generate a sliding window of the alignment data
 // 2.0 initialize the variables we need to create a sliding window.
