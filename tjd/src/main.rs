@@ -66,7 +66,7 @@ let mut data = String::new();
 while end <= alignment[0].len(){
     for row in &alignment {
         window.push(row[start..end].to_string());
-        println!("window length pushed. end value equals {}", end);
+        //println!("window length pushed. end value equals {}", end);
 }
 
 // 2.2 calculate the tajima's d statistic and print
@@ -112,10 +112,13 @@ fn calculate_pi(alignment: &Vec<String>) -> f64 {
         }
     }
 
+    println!("pairwise distances computed");
+
     // 1.2 sum the pairwise distances and then divide by the n(n-1)
     let align_length = align_length as i32;
     let dist_sum = distances.iter().sum::<i32>();
     let pi = (dist_sum*2) as f64 /(align_length*(align_length-1)) as f64;
+    println!("pi computed");
     return pi;
 
     //// 2 given two string sequences, output the hamming distance between them
