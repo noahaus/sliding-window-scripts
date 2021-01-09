@@ -62,13 +62,16 @@ let mut end: usize = start + window_size; // index to end the window
 let mut data = String::new();
 
 // 2.1 while the size of 'end' is smaller than total size of the sequence, update the window
+
 while end <= alignment[0].len(){
     for row in &alignment {
         window.push(row[start..end].to_string());
+        println!("window length pushed");
 }
 
 // 2.2 calculate the tajima's d statistic and print
 let temp = tajimas_d(&window);
+println!("tajima's d calculated");
 println!("{},{},{}",start,end,temp);
 data = format!("{},{},{}",start,end,temp);
 writeln!(output,"{}",data)?;
