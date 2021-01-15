@@ -9,7 +9,7 @@ arguments: input FASTA, output CSV, window size, window step size
 TODOS
 *****/
 
-//currently none
+//speed up the pairwise comparison step. https://docs.rs/hamming/0.1.3/hamming/index.html
 
 
 /******************** 
@@ -107,7 +107,6 @@ fn calculate_pi(alignment: &Vec<String>) -> f64 {
         for j in 0..align_length {
             if i < j {
                 distances.push(hamming_distance(&alignment[i],&alignment[j]));
-                println!("pairwise comparison");
             } else {
                 continue;
             }
@@ -125,19 +124,10 @@ fn calculate_pi(alignment: &Vec<String>) -> f64 {
     //// 2 given two string sequences, output the hamming distance between them
     // assuming that these sequences are the same size, then we can just calculate the number of times the strings are different
     fn hamming_distance(seq1: &String,seq2: &String) -> i32 {
-        let mut distance = 0;
-
-        // 2.0 loop through the characters in both strings
-        // update the distance value if characters are different
-        for i in 0..seq1.len() {
-            if seq1.chars().nth(i) == seq2.chars().nth(i) {            
-                continue;            
-            } else {
-                distance += 1;
-        }
+        //Remember this 
+        let distance = seq1.as_bytes().iter().zip(seq2.as_bytes()).fold(0,|a,(b,c)| a + (*b != *c) as i32);
+        return distance;
     }
-    return distance;
-}
     
 }
 
