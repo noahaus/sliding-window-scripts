@@ -1,1 +1,1 @@
-/Users/noahaus/GithubRepos/sliding-window-scripts/tjd/target/debug/tjd: /Users/noahaus/GithubRepos/sliding-window-scripts/tjd/src/main.rs
+/scratch/noahaus/bov_pangen_reservoirs/core/positive_selection/species_tjd/sliding-window-scripts/tjd/target/debug/tjd: /scratch/noahaus/bov_pangen_reservoirs/core/positive_selection/species_tjd/sliding-window-scripts/tjd/src/main.rs
