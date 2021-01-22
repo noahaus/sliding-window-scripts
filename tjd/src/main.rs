@@ -21,6 +21,7 @@ TODOS
  use std::fs::File;
  use std::io::Write;
  use std::env;
+ use rayon::prelude::*;
  
 fn main() -> std::io::Result<()> {
 
@@ -39,12 +40,12 @@ let mut reader = Reader::from_path(input_path).unwrap();
 
 // 1.1 create a Vec data structure that will hold the sequence strings
 let mut alignment = Vec::<String>::new();
-println!("start,end,tjd"); // this will be important for CSV file headers
-writeln!(output,"start,end,tjd")?;
 
 // 1.2 loop through the file and add values to the 'alignment' variable.
 // this is pretty boiler-plate from the seq_io website.
 println!("reading in alignment");
+println!("start,end,tjd"); // this will be important for CSV file headers
+writeln!(output,"start,end,tjd")?;
 while let Some(record) = reader.next() {
     let record = record.expect("Error reading record");
     for s in record.seq_lines() {
@@ -71,7 +72,6 @@ while end <= alignment[0].len(){
 
 // 2.2 calculate the tajima's d statistic and print
 let temp = tajimas_d(&window);
-println!("tajima's d calculated");
 println!("{},{},{}",start,end,temp);
 data = format!("{},{},{}",start,end,temp);
 writeln!(output,"{}",data)?;
@@ -102,7 +102,6 @@ fn calculate_pi(alignment: &Vec<String>) -> f64 {
     let mut distances = Vec::new(); // vector that holds all the values of the pairwise distances
 
     // 1.1 'distances' vector is updated as the hamming distance is calculated between two sequences
-    println!("prepare for pairwise comparisons");
     for i in 0..align_length {
         for j in 0..align_length {
             if i < j {
@@ -112,20 +111,18 @@ fn calculate_pi(alignment: &Vec<String>) -> f64 {
             }
         }
     }
-    println!("pairwise distances computed");
 
     // 1.2 sum the pairwise distances and then divide by the n(n-1)
     let align_length = align_length as i32;
     let dist_sum = distances.iter().sum::<i32>();
     let pi = (dist_sum*2) as f64 /(align_length*(align_length-1)) as f64;
-    println!("pi computed");
     return pi;
 
     //// 2 given two string sequences, output the hamming distance between them
     // assuming that these sequences are the same size, then we can just calculate the number of times the strings are different
     fn hamming_distance(seq1: &String,seq2: &String) -> i32 {
         //Remember this 
-        let distance = seq1.as_bytes().iter().zip(seq2.as_bytes()).fold(0,|a,(b,c)| a + (*b != *c) as i32);
+        let distance = seq1.as_bytes().par_iter().zip(seq2.as_bytes()).fold(|| 0,|a,(b,c)| a + (*b != *c) as i32).sum::<i32>();
         return distance;
     }
     
