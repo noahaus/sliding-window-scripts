@@ -9,7 +9,7 @@ arguments: input FASTA, output CSV, window size, window step size
 TODOS
 *****/
 
-//speed up the pairwise comparison step. https://docs.rs/hamming/0.1.3/hamming/index.html
+// practice using rust wrapper with python https://developers.redhat.com/blog/2017/11/16/speed-python-using-rust/
 
 
 /******************** 
